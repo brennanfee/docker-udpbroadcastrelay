@@ -1,0 +1,11 @@
+---
+# vim: set ft=yaml :
+Listeners:
+  # Syncthing
+  - Flags: --id 1 --port 21027 --dev enp5s0 --dev enp4s0
+  # Youtube, Chromecast, and DLNA (aka SSDP)
+  - Flags: >-
+      --id 2 --port 1900 --dev enp5s0 --dev enp4s0 --multicast 239.255.255.250
+      -s 1.1.1.2 --msearch proxy,urn:schemas-upnp-org:device:MediaServer:1 --msearch dial
+  # mDNS
+  - Flags: --id 3 --port 5353 --dev enp5s0 --dev enp4s0 --multicast 224.0.0.251 -s 1.1.1.1
