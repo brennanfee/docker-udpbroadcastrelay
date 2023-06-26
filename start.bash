@@ -56,6 +56,9 @@ function main() {
       exit 4
     fi
 
+    # Unwrap the flags, they come wrapped in quotes for some reason
+    flags=$(sed -e 's/^"//' -e 's/"$//' <<< "${flags}")
+
     if [[ "${flags_next}" == "null" ]]; then
       # This is the last iteration, break out of the loop
       break
@@ -70,6 +73,7 @@ function main() {
   done
 
   # Now run the last item, but DO NOT fork
+  echo "${app}: Flags for final listener #${index} - ${flags}"
   echo "${app}: Starting final listener #${index} - $(date --rfc-3339=seconds)"
   /srv/udpbroadcastrelay ${flags}
 }
