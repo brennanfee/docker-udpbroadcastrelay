@@ -1,0 +1,9 @@
+---
+# vim: set ft=yaml :
+ignored:
+  - DL3008
+label-schema:
+  author: text
+  documentation: url
+  version: semver
+  license: spdx
