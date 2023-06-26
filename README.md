@@ -67,7 +67,7 @@ manages that automatically.
 2. Prepare your configuration file (see [Configuration](#configuration) above) and place it
    somewhere you will mount into the docker container.
 3. Run this container with either docker, podman, or docker-compose as follows:
-   `docker run -d --network=host --restart=unless-stopped --volume /paht/to/config/file:/data --name
+   `docker run -d --network=host --restart=unless-stopped --volume /paht/to/config/directory:/data --name
 udpbroadcastrelay brennanfee/docker-udpbroadcastrelay:latest`
 
 ## License
