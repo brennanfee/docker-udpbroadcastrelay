@@ -22,9 +22,10 @@ fi
 function main() {
   local app="udpbroadcastrelay"
   echo "${app}: Starting up - $(date --rfc-3339=seconds)"
+  echo "${app}: Path: ${path}"
 
   # Check for yq
-  if command -v yq &> /dev/null; then
+  if [[ ! -x /usr/bin/yq ]]; then
     echo "${app}: ERROR - yq utility is not installed but required."
     exit 1
   fi
@@ -47,8 +48,8 @@ function main() {
     local flags_next
     local next=$((index + 1))
 
-    flags=$(yq ".listeners[${index}]" /data/${app}.yml)
-    flags_next=$(yq ".listeners[${next}]" /data/${app}.yml)
+    flags=$(/usr/bin/yq ".listeners[${index}]" /data/${app}.yml)
+    flags_next=$(/usr/bin/yq ".listeners[${next}]" /data/${app}.yml)
 
     if [[ "${flags}" == "null" ]]; then
       echo "${app}: ERROR - Configuration error, flags read were blank."
