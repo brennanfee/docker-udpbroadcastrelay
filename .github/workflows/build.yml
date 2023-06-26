@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - Dockerfile
+      - start.bash
   workflow_dispatch: null
 
 jobs:
