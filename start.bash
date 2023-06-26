@@ -48,8 +48,8 @@ function main() {
     local flags_next
     local next=$((index + 1))
 
-    flags=$(/usr/bin/yq ".listeners[${index}]" /data/${app}.yml)
-    flags_next=$(/usr/bin/yq ".listeners[${next}]" /data/${app}.yml)
+    flags=$(/usr/bin/yq ".Listeners[${index}].Flags" /data/${app}.yml)
+    flags_next=$(/usr/bin/yq ".Listeners[${next}].Flags" /data/${app}.yml)
 
     if [[ "${flags}" == "null" ]]; then
       echo "${app}: ERROR - Configuration error, flags read were blank."
