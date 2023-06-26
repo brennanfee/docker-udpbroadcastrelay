@@ -61,6 +61,7 @@ function main() {
       break
     else
       # Run the item and fork it to background
+      echo "${app}: Flags for listener #${index} - ${flags}"
       echo "${app}: Starting listener #${index} - $(date --rfc-3339=seconds)"
       /srv/udpbroadcastrelay -f "${flags}"
     fi
