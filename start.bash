@@ -63,7 +63,7 @@ function main() {
       # Run the item and fork it to background
       echo "${app}: Flags for listener #${index} - ${flags}"
       echo "${app}: Starting listener #${index} - $(date --rfc-3339=seconds)"
-      /srv/udpbroadcastrelay -f "${flags}"
+      /srv/udpbroadcastrelay -f ${flags}
     fi
 
     index=${next}
@@ -71,7 +71,7 @@ function main() {
 
   # Now run the last item, but DO NOT fork
   echo "${app}: Starting final listener #${index} - $(date --rfc-3339=seconds)"
-  /srv/udpbroadcastrelay "${flags}"
+  /srv/udpbroadcastrelay ${flags}
 }
 
 main "$@"
