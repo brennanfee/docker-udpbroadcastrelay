@@ -26,7 +26,7 @@ COPY --from=base /srv /srv
 # yq is needed by the script
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y --no-install-recommends yq \
+  && apt-get install -y --no-install-recommends yq iproute2 \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
 
