@@ -23,6 +23,8 @@ function main() {
   local app="udpbroadcastrelay"
   echo "${app}: Starting up - $(date --rfc-3339=seconds)"
   echo "${app}: Path: ${PATH}"
+  echo "${app}: Network interfaces - "
+  ip a | grep -i "state up" | awk '{print $2 }'
 
   # Check for yq
   if [[ ! -x /usr/bin/yq ]]; then
