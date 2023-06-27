@@ -41,4 +41,4 @@ ENV LANG C.UTF-8
 ENV TZ America/Chicago
 
 # Run when the container launches
-CMD ["/usr/bin/bash", "/data/start.bash"]
+CMD ["/usr/bin/bash", "/srv/start.bash"]

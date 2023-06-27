@@ -45,39 +45,40 @@ function main() {
   fi
 
   local index=0
-  local flags=""
+  local flag_string=""
+  local flags=()
   while true; do
-    local flags_next
+    local flag_string_next
     local next=$((index + 1))
 
-    flags=$(/usr/bin/yq ".Listeners[${index}].Flags" /data/${app}.yml)
-    flags_next=$(/usr/bin/yq ".Listeners[${next}].Flags" /data/${app}.yml)
+    flag_string=$(/usr/bin/yq -r ".Listeners[${index}].Flags" /data/${app}.yml)
+    flag_string_next=$(/usr/bin/yq -r ".Listeners[${next}].Flags" /data/${app}.yml)
 
-    if [[ "${flags}" == "null" ]]; then
+    if [[ "${flag_string}" == "null" || "${flag_string}" == "" ]]; then
       echo "${app}: ERROR - Configuration error, flags read were blank."
       exit 4
     fi
 
-    # Unwrap the flags, they come wrapped in quotes for some reason
-    flags=$(sed -e 's/^"//' -e 's/"$//' <<< "${flags}")
+    # Convert to an array
+    IFS=' ' read -ra flags <<< "$flag_string"
 
-    if [[ "${flags_next}" == "null" ]]; then
+    if [[ "${flag_string_next}" == "null" || "${flag_string_next}" == "" ]]; then
       # This is the last iteration, break out of the loop
       break
     else
       # Run the item and fork it to background
-      echo "${app}: Flags for listener #${index} - ${flags}"
+      echo "${app}: Flags for listener #${index} - ${flags[*]}"
       echo "${app}: Starting listener #${index} - $(date --rfc-3339=seconds)"
-      /srv/udpbroadcastrelay -f ${flags}
+      /srv/udpbroadcastrelay -f "${flags[@]}"
     fi
 
     index=${next}
   done
 
   # Now run the last item, but DO NOT fork
-  echo "${app}: Flags for final listener #${index} - ${flags}"
+  echo "${app}: Flags for final listener #${index} - ${flags[*]}"
   echo "${app}: Starting final listener #${index} - $(date --rfc-3339=seconds)"
-  /srv/udpbroadcastrelay ${flags}
+  /srv/udpbroadcastrelay "${flags[@]}"
 }
 
 main "$@"
